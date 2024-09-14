@@ -1,0 +1,8 @@
+Flask==2.1.2
+hdbscan==0.8.29
+numpy==1.23.5
+openpyxl==3.0.10
+pandas==1.5.2
+torch==1.12.1
+transformers==4.24.0
+umap-learn==0.5.3

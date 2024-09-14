@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluster Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #4CAF50;
+            padding: 20px;
+            margin-top: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .cluster {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #181818;
+            text-align: left;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .cluster-header {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .sentence {
+            margin: 10px 0;
+            padding: 10px;
+            border-bottom: 1px solid #000000;
+        }
+        .sentence:last-child {
+            border-bottom: none;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: rgb(11, 11, 11);
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cluster Results</h1>
+    <div class="container">
+        {% for cluster in clusters %}
+        <div class="cluster" style="background-color: {{ cluster_colors[loop.index0 % cluster_colors|length] }};">
+            <div class="cluster-header">Cluster ID: {{ cluster.cluster_id }}</div>
+            {% if cluster.topic_name and cluster.topic_name != "prompt" %}
+            <div class="cluster-topic">Topic Name: {{ cluster.topic_name }}</div>
+            {% endif %}
+            {% for sentence in cluster.sentences %}
+            {% if sentence and "prompt" not in sentence %}
+            <div class="sentence">{{ sentence }}</div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('index') }}" class="back-button">Back to Input</a>
+</body>
+</html>
